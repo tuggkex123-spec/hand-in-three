@@ -1,0 +1,12 @@
+{
+  "name": "hand-in-three",
+  "version": "1.0.0",
+  "description": "hand in three",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "first.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
