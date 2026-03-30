@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', { title: `Edit ${user.user_name} | Users` }) %>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h2>Edit User</h2>
+
+    <form action="/users/<%= user.slug %>?_method=PUT" method="POST">
+      <label for="user_name">Name:</label>
+      <input type="text" id="user_name" value="<%= user.user_name %>" name="user_name" placeholder="Name" required /><br />
+
+      <label for="slug">Slug:</label>
+      <input type="text" id="slug" value="<%= user.slug %>" name="slug" placeholder="Slug" required /><br />
+
+      <label for="age">Age:</label>
+      <input type="number" id="age" value="<%= user.age %>" name="age" placeholder="Age" min="0" step="1" required /><br />
+
+      <button>Save</button>
+    </form>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

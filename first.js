@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 
+
 const app = express()
 const PORT = 3000
 
@@ -46,28 +47,76 @@ app.get('/users/new', (request, response) => {
   response.render('users/new')
 })
 
-app.get('/users', async (req, res) => {
+app.get('/users', async (request, response) => {
   try {
-    const users = await User.find({})  // get all users from MongoDB
-    res.render('users/index', {
+    const users = await User.find({})
+    response.render('users/index', {
       users: users
     })
   } catch (error) {
     console.error(error)
-    res.send('Error fetching users')
+    response.send('Error fetching users')
   }
 })
 
-app.get('/users/:slug', async (req, res) => {
+app.get('/users/:slug', async (request, response) => {
   try {
-    const user = await User.findOne({ slug: req.params.slug })
+    const user = await User.findOne({ slug: request.params.slug })
     if (!user) {
-      return res.status(404).send('User not found')
+      return response.status(404).send('User not found')
     }
 
-    res.render('users/show', { user })
+    response.render('users/show', { user })
   } catch (error) {
     console.error(error)
-    res.status(500).send('Error fetching user')
+    response.status(500).send('Error fetching user')
+  }
+})
+
+app.get('/users/:slug/edit', async (request, response) => {
+  try {
+    const slug = request.params.slug
+    const user = await User.findOne({ slug }).exec()
+    
+    if (!user) throw new Error('User not found')
+
+    response.render('users/edit', { user })
+  } catch (error) {
+    console.error(error)
+    response.status(404).send("Could not find the user you're looking for.")
+  }
+})
+
+app.post('/users/:slug', async (request, response) => {
+  try {
+    const updatedUser = await User.findOneAndUpdate(
+      { slug: request.params.slug },   
+      {
+        user_name: request.body.user_name,
+        slug: request.body.slug,
+        age: request.body.age
+      },
+      { new: true, runValidators: true }
+    )
+
+    if (!updatedUser) {
+      return response.status(404).send("User not found")
+    }
+
+    response.redirect(`/users/${updatedUser.slug}`)
+  } catch (error) {
+    console.error(error)
+    response.status(400).send("Error: The user could not be updated.")
+  }
+})
+
+app.get('/users/:slug/delete', async (request, response) => {
+  try {
+    await User.findOneAndDelete({ slug: request.params.slug })
+
+    response.redirect('/users')
+  } catch (error) {
+    console.error(error)
+    response.status(400).send('Error: No user was deleted.')
   }
 })
