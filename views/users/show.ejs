@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', { title: `${user.user_name} | Users` }) %>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h1><%= user.user_name %></h1>
+    <p><strong>Slug:</strong> <%= user.slug %></p>
+    <p><strong>Age:</strong> <%= user.age %></p>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

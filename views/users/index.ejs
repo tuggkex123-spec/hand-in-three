@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/head', { title: 'All Users | Users' }) %>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <h1>All Users</h1>
+
+    <% if(users.length === 0) { %>
+      <p>No users found.</p>
+    <% } else { %>
+      <ul>
+        <% users.forEach(user => { %>
+          <li>
+            <a href="/users/<%= user.slug %>"><%= user.user_name %></a>
+            - Age: <%= user.age %>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>

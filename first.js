@@ -45,3 +45,29 @@ app.post('/users', async (request, response) => {
 app.get('/users/new', (request, response) => {
   response.render('users/new')
 })
+
+app.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({})  // get all users from MongoDB
+    res.render('users/index', {
+      users: users
+    })
+  } catch (error) {
+    console.error(error)
+    res.send('Error fetching users')
+  }
+})
+
+app.get('/users/:slug', async (req, res) => {
+  try {
+    const user = await User.findOne({ slug: req.params.slug })
+    if (!user) {
+      return res.status(404).send('User not found')
+    }
+
+    res.render('users/show', { user })
+  } catch (error) {
+    console.error(error)
+    res.status(500).send('Error fetching user')
+  }
+})
