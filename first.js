@@ -4,6 +4,12 @@ import mongoose from 'mongoose'
 const app = express()
 const PORT = 3000
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'));
+
 mongoose.connect('mongodb://127.0.0.1:27017/admin')
   .then(() => console.log('💽 Database connected'))
   .catch(error => console.error(error))
@@ -23,9 +29,9 @@ const User = mongoose.model('User', userSchema)
 app.post('/users', async (request, response) => {
   try {
     const user = new User({
-    slug: 'jane-doe',
-    user_name: 'Jane Doe',
-    age: 22
+      slug: request.body.slug,
+      user_name: request.body.user_name,
+      age: request.body.age
   })
   await user.save()
 
@@ -36,6 +42,6 @@ app.post('/users', async (request, response) => {
   }
 })
 
-app.get('/user/new', (request, response) => {
+app.get('/users/new', (request, response) => {
   response.render('users/new')
 })
