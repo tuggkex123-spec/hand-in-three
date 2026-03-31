@@ -120,3 +120,13 @@ app.get('/users/:slug/delete', async (request, response) => {
     response.status(400).send('Error: No user was deleted.')
   }
 })
+
+app.get('/', async (request, response) => {
+  try {
+    const userCount = await User.countDocuments()
+    response.render('index', { userCount })
+  } catch (error) {
+    console.error(error)
+    response.render('index', { userCount: 0 })
+  }
+})
