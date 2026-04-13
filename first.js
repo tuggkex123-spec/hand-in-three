@@ -1,6 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
-
+import 'dotenv/config'
 
 const app = express()
 const PORT = 3000
@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs')
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/admin')
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('💽 Database connected'))
   .catch(error => console.error(error))
 
