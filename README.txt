@@ -16,7 +16,7 @@ Node.js, express, mongodb, mongoose, ejs, css, dotenv
 How do I set it up locally?
 
 Clone the repository
-git clone https://github.com/your-username/hand-in-three.git
+git clone https://github.com/tuggkex123-spec/hand-in-three.git
 cd hand-in-three
 Install dependencies
 npm install
