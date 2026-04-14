@@ -64,3 +64,8 @@ nav {
 .btn-pink {
   background-color: #e75480;
 }
+
+@media (max-width: 600px) {
+  .container { padding: 20px; }
+  nav { flex-direction: column; }
+}
