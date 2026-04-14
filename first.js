@@ -23,7 +23,7 @@ app.listen(process.env.PORT, () => {
 const userSchema = new mongoose.Schema({
   slug: { type: String, unique: true, required: true },
   user_name: { type: String, unique: true, required: true },
-  age: { type: String, unique: true, required: true }, 
+  age: { type: String, required: true }, 
 })
 
 const User = mongoose.model('User', userSchema)
