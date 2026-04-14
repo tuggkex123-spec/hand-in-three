@@ -13,9 +13,10 @@
       <button>Edit</button>
     </a>
       
-    <a href="/users/<%= user.slug %>/delete">
-     <button>Delete</button>
+    <a href="/users/<%= user.slug %>/delete"onclick="return confirm('Are you sure?')">
+      <button>Delete</button>
     </a>
+
 
   </main>
 
