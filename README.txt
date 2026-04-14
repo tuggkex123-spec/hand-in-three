@@ -39,11 +39,8 @@ http://localhost:3000
 
 
 How do I test it?
-Make sure the server is running first, then open a second terminal and run:
-
-node test_app.js
-
-The tests check that all routes work correctly — creating, reading, updating and deleting users.
+There are tests embedded in the code, unit tests. 
+And if you try to write for example a duplicate it will throw an error at you.
 
 Project Structure
 
