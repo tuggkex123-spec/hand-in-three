@@ -8,6 +8,15 @@
     <h1><%= user.user_name %></h1>
     <p><strong>Slug:</strong> <%= user.slug %></p>
     <p><strong>Age:</strong> <%= user.age %></p>
+
+    <a href="/users/<%= user.slug %>/edit">
+      <button>Edit</button>
+    </a>
+      
+    <a href="/users/<%= user.slug %>/delete">
+     <button>Delete</button>
+    </a>
+
   </main>
 
   <%- include('../partials/footer') %>
