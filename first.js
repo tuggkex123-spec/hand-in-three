@@ -37,7 +37,7 @@ app.post('/users', async (request, response) => {
   })
   await user.save()
 
-    response.send('User Created')
+    response.redirect('/')
   }catch (error) {
     console.error(error)
     response.send('Error: The user could not be created.')
