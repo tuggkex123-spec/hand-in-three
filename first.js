@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 
 const app = express()
-const PORT = 3000
+
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -15,8 +15,8 @@ mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('💽 Database connected'))
   .catch(error => console.error(error))
 
-app.listen(PORT, () => {
-  console.log(`👋 Started server on port ${PORT}`)
+app.listen(process.env.PORT, () => {
+  console.log(`👋 Started server on port ${process.env.PORT}`)
 })
 
 const userSchema = new mongoose.Schema({
