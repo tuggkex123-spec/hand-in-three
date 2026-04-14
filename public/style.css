@@ -1,42 +1,66 @@
-/* General */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  font-family: Arial, sans-serif;
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f5f5f5;
+  font-family: 'Georgia', serif;
+  background-color: #fff0f5;
+  color: #5a3e4b;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Headings */
+.container {
+  text-align: center;
+  padding: 40px;
+}
+
 h1 {
-  color: #333;
+  font-size: 3rem;
+  color: #e75480;
+  margin-bottom: 10px;
 }
 
-/* Buttons */
-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  background-color: #4CAF50;
+.subtitle {
+  font-size: 1.2rem;
+  color: #c47a95;
+  margin-bottom: 30px;
+}
+
+.card {
+  background-color: #ffe4f0;
+  border: 2px solid #f4a7c3;
+  border-radius: 16px;
+  padding: 20px 40px;
+  display: inline-block;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+nav {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 1rem;
+  background-color: #f4a7c3;
   color: white;
+  transition: opacity 0.2s;
 }
 
-button:hover {
+.btn:hover {
   opacity: 0.8;
 }
 
-/* Make delete button red */
-a:last-child button {
-  background-color: #e74c3c;
-}
-
-/* Forms */
-input {
-  display: block;
-  margin: 8px 0;
-  padding: 8px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.btn-pink {
+  background-color: #e75480;
 }
