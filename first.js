@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs')
 
+console.log('MONGODB_URI:', process.env.MONGODB_URI)
 
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('💽 Database connected'))
