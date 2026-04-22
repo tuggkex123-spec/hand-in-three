@@ -153,7 +153,7 @@ app.post('/users/:slug', async (request, response) => {
       {
         user_name: request.body.user_name,
         slug: request.body.slug,
-        age: request.body.age
+        age: Number(request.body.age)
       },
       { new: true, runValidators: true }
     )

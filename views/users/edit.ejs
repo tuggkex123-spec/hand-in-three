@@ -7,15 +7,44 @@
   <main>
     <h2>Edit User</h2>
 
-    <form action="/users/<%= user.slug %>?_method=PUT" method="POST">
+    <form action="/users/<%= user.slug %>" method="POST">
       <label for="user_name">Name:</label>
-      <input type="text" id="user_name" value="<%= user.user_name %>" name="user_name" placeholder="Name" required /><br />
+      <input
+        type="text"
+        id="user_name"
+        name="user_name"
+        value="<%= user.user_name %>"
+        placeholder="Name"
+        required
+        minlength="2"
+        maxlength="50"
+      /><br />
 
       <label for="slug">Slug:</label>
-      <input type="text" id="slug" value="<%= user.slug %>" name="slug" placeholder="Slug" required /><br />
+      <input
+        type="text"
+        id="slug"
+        name="slug"
+        value="<%= user.slug %>"
+        placeholder="Slug"
+        required
+        minlength="3"
+        maxlength="30"
+        pattern="[a-z0-9-]+"
+      /><br />
 
       <label for="age">Age:</label>
-      <input type="number" id="age" value="<%= user.age %>" name="age" placeholder="Age" min="0" step="1" required /><br />
+      <input
+        type="number"
+        id="age"
+        name="age"
+        value="<%= user.age %>"
+        placeholder="Age"
+        required
+        min="0"
+        max="130"
+        step="1"
+      /><br />
 
       <button>Save</button>
     </form>

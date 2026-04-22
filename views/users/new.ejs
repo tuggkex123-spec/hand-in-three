@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../partials/head', {title: "New user | Users"}) %>
+<%- include('../partials/head', { title: "New user | Users" }) %>
 <body>
   <%- include('../partials/header') %>
 
@@ -8,13 +8,37 @@
     <h2>Create a new user</h2>
 
     <form action="/users" method="POST">
-      <input type="text" name="user_name" placeholder="user_name" required /><br />
-      <input type="text" name="slug" placeholder="slug" required /><br />
-      <input type="number" name="age" placeholder="age" required min="0" step="1" /><br />
+      <input
+        type="text"
+        name="user_name"
+        placeholder="user_name"
+        required
+        minlength="2"
+        maxlength="50"
+      /><br />
+
+      <input
+        type="text"
+        name="slug"
+        placeholder="slug"
+        required
+        minlength="3"
+        maxlength="30"
+        pattern="[a-z0-9-]+"
+      /><br />
+
+      <input
+        type="number"
+        name="age"
+        placeholder="age"
+        required
+        min="0"
+        max="130"
+        step="1"
+      /><br />
+
       <button>Save</button>
     </form>
   </main>
-
-  
 </body>
 </html>
