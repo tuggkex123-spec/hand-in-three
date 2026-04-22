@@ -73,6 +73,7 @@ function validateUserInput(input) {
 
 const User = mongoose.model('User', userSchema)
 
+
 app.post('/users', async (request, response) => {
   const result = validateUserInput(request.body)
 
@@ -140,6 +141,12 @@ app.get('/users/:slug/edit', async (request, response) => {
 })
 
 app.post('/users/:slug', async (request, response) => {
+  const result = validateUserInput(request.body)
+
+  if (!result.isValid) {
+    return response.send(result.errors.join(' '))
+  }
+  
   try {
     const updatedUser = await User.findOneAndUpdate(
       { slug: request.params.slug },   
