@@ -74,6 +74,12 @@ function validateUserInput(input) {
 const User = mongoose.model('User', userSchema)
 
 app.post('/users', async (request, response) => {
+  const result = validateUserInput(request.body)
+
+  if (!result.isValid) {
+    return response.send(result.errors.join(' '))
+  }
+  
   try {
     const user = new User({
       slug: request.body.slug,
