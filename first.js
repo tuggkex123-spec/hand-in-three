@@ -78,21 +78,15 @@ app.post('/users', async (request, response) => {
   const result = validateUserInput(request.body)
 
   if (!result.isValid) {
-    return response.send(result.errors.join(' '))
+    return response.status(400).send(result.errors.join(' '))
   }
   
   try {
-    const user = new User({
-      slug: request.body.slug,
-      user_name: request.body.user_name,
-      age: request.body.age
-  })
-  await user.save()
-
+    const user = new User(request.body)
+    await user.save()
     response.redirect('/')
-  }catch (error) {
-    console.error(error)
-    response.send('Error: The user could not be created.')
+  } catch (error) {
+    next(error)
   }
 })
 
@@ -115,14 +109,10 @@ app.get('/users', async (request, response) => {
 app.get('/users/:slug', async (request, response) => {
   try {
     const user = await User.findOne({ slug: request.params.slug })
-    if (!user) {
-      return response.status(404).send('User not found')
-    }
-
+    if (!user) throw new AppError ('User not found', 404)
     response.render('users/show', { user })
   } catch (error) {
-    console.error(error)
-    response.status(500).send('Error fetching user')
+    next(error)
   }
 })
 
