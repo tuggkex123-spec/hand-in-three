@@ -189,3 +189,29 @@ app.get('/', async (request, response) => {
     response.render('index', { userCount: 0 })
   }
 })
+
+
+// Centralized error handler
+app.use((error, request, response, next) => {
+  console.error(error)
+
+  // Mongoose duplicate key
+  if (error.code === 11000) {
+    const field = Object.keys(error.keyValue)[0]
+    return response.status(409).send(`Error: ${field} is already taken.`)
+  }
+
+  // Mongoose validation error
+  if (error.name === 'ValidationError') {
+    const messages = Object.values(error.errors).map(e => e.message)
+    return response.status(400).send(messages.join(' '))
+  }
+
+  // Custom app errors (see below)
+  if (error.statusCode) {
+    return response.status(error.statusCode).send(error.message)
+  }
+
+  // Fallback
+  response.status(500).send('Something went wrong.')
+})
