@@ -1,4 +1,6 @@
 import express from 'express'
+import userRoutes from './routes/users.js'
+import errorHandler from './middleware/errorHandler.js'
 
 const app = express()
 
