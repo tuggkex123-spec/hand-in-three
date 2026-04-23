@@ -11,12 +11,13 @@ import {
 
 const router = express.Router()
 
-router.post('/', createUser)
 router.get('/new', getNewUserForm)
 router.get('/', listUsers)
+router.post('/', createUser)
 router.get('/:slug', showUser)
 router.get('/:slug/edit', editUserForm)
 router.post('/:slug', updateUser)
 router.get('/:slug/delete', deleteUser)
 
 export default router
+
