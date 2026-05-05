@@ -69,3 +69,224 @@ nav {
   .container { padding: 20px; }
   nav { flex-direction: column; }
 }
+
+
+/* USERS PAGE ONLY */
+body.users-page {
+  display: block;
+  background-color: #fff0f5;
+  color: #5a3e4b;
+  font-family: 'Georgia', serif;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+.users-page .users-container {
+  max-width: 950px;
+  margin: 0 auto;
+}
+
+.users-page h1 {
+  font-size: 2.5rem;
+  color: #e75480;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.users-page .users-top-nav {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.users-page .users-top-nav a {
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 1rem;
+  background-color: #f4a7c3;
+  color: white;
+  transition: opacity 0.2s;
+}
+
+.users-page .users-top-nav a:hover {
+  opacity: 0.8;
+}
+
+.users-page .filter-form {
+  background-color: #ffe4f0;
+  border: 2px solid #f4a7c3;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+
+.users-page .filter-form div {
+  margin-bottom: 16px;
+}
+
+.users-page .filter-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #a14b68;
+}
+
+.users-page .filter-form input,
+.users-page .filter-form select {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 12px;
+  border: 1px solid #f4a7c3;
+  border-radius: 10px;
+  background-color: white;
+  color: #5a3e4b;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.users-page .filter-form button {
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 1rem;
+  background-color: #e75480;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-right: 10px;
+}
+
+.users-page .filter-form button:hover {
+  opacity: 0.8;
+}
+
+.users-page .filter-form .reset-link {
+  text-decoration: none;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 1rem;
+  background-color: #f4a7c3;
+  color: white;
+  display: inline-block;
+  transition: opacity 0.2s;
+}
+
+.users-page .filter-form .reset-link:hover {
+  opacity: 0.8;
+}
+
+.users-page .user-list {
+  list-style: none;
+  padding: 0;
+}
+
+.users-page .user-card {
+  background-color: #ffe4f0;
+  border: 2px solid #f4a7c3;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.users-page .user-card strong {
+  color: #e75480;
+  font-size: 1.15rem;
+}
+
+.users-page .user-meta {
+  margin-top: 8px;
+  margin-bottom: 12px;
+}
+
+.users-page .user-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.users-page .user-actions a {
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  background-color: #f4a7c3;
+  color: white;
+  transition: opacity 0.2s;
+}
+
+.users-page .user-actions a:hover {
+  opacity: 0.8;
+}
+
+.users-page .pagination {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.users-page .pagination a {
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  background-color: #e75480;
+  color: white;
+  transition: opacity 0.2s;
+}
+
+.users-page .pagination a:hover {
+  opacity: 0.8;
+}
+
+.users-page .users-total {
+  text-align: center;
+  margin-top: 20px;
+  color: #a14b68;
+}
+
+.users-page hr {
+  border: none;
+  border-top: 1px solid #f4a7c3;
+  margin: 25px 0;
+}
+
+.users-page .empty-state {
+  text-align: center;
+  background-color: #ffe4f0;
+  border: 2px solid #f4a7c3;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+@media (max-width: 600px) {
+  body.users-page {
+    padding: 20px 12px;
+  }
+
+  .users-page h1 {
+    font-size: 2rem;
+  }
+
+  .users-page .filter-form input,
+  .users-page .filter-form select {
+    max-width: 100%;
+  }
+
+  .users-page .user-actions {
+    flex-direction: column;
+  }
+
+  .users-page .user-actions a,
+  .users-page .pagination a,
+  .users-page .filter-form button,
+  .users-page .filter-form .reset-link {
+    width: 100%;
+    text-align: center;
+  }
+}

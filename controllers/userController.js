@@ -31,7 +31,7 @@ export async function listUsers(req, res, next) {
   try {
     const query = {}
 
-    // Search by user_name or slug
+    
     if (req.query.q && req.query.q.trim() !== '') {
       query.$or = [
         { user_name: { $regex: req.query.q.trim(), $options: 'i' } },
@@ -39,7 +39,7 @@ export async function listUsers(req, res, next) {
       ]
     }
 
-    // Age filtering with LHS brackets: age[gte], age[lte]
+    
     if (req.query.age) {
       query.age = {}
 
@@ -57,13 +57,13 @@ export async function listUsers(req, res, next) {
         }
       }
 
-      // Remove empty age object if nothing valid was added
+     
       if (Object.keys(query.age).length === 0) {
         delete query.age
       }
     }
 
-    // Allowed sort fields
+   
     const allowedSortFields = ['user_name', 'slug', 'age']
     let sortBy = 'user_name'
 
@@ -71,7 +71,7 @@ export async function listUsers(req, res, next) {
       sortBy = req.query.sort_by
     }
 
-    // Pagination
+    
     let limit = Number(req.query.limit)
     let offset = Number(req.query.offset)
 
