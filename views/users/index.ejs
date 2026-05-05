@@ -1,26 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../partials/head', { title: 'All Users | Users' }) %>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users</title>
+</head>
 <body>
-  <%- include('../partials/header') %>
+  <h1>Users</h1>
 
-  <main>
-    <h1>All Users</h1>
+  <a href="/">Home</a>
+  <a href="/users/new">Create new user</a>
 
-    <% if(users.length === 0) { %>
-      <p>No users found.</p>
-    <% } else { %>
-      <ul>
-        <% users.forEach(user => { %>
-          <li>
-            <a href="/users/<%= user.slug %>"><%= user.user_name %></a>
-            - Age: <%= user.age %>
-          </li>
-        <% }) %>
-      </ul>
+  <hr>
+
+  <form action="/users" method="GET">
+    <div>
+      <label for="q">Search</label>
+      <input
+        type="text"
+        id="q"
+        name="q"
+        value="<%= filters?.q || '' %>"
+        placeholder="Search by name or slug"
+      >
+    </div>
+
+    <div>
+      <label for="age-gte">Minimum age</label>
+      <input
+        type="number"
+        id="age-gte"
+        name="age[gte]"
+        value="<%= filters?.ageGte || '' %>"
+      >
+    </div>
+
+    <div>
+      <label for="age-lte">Maximum age</label>
+      <input
+        type="number"
+        id="age-lte"
+        name="age[lte]"
+        value="<%= filters?.ageLte || '' %>"
+      >
+    </div>
+
+    <div>
+      <label for="sort_by">Sort by</label>
+      <select id="sort_by" name="sort_by">
+        <option value="user_name" <%= filters?.sort_by === 'user_name' ? 'selected' : '' %>>
+          Name (A-Z)
+        </option>
+        <option value="-user_name" <%= filters?.sort_by === '-user_name' ? 'selected' : '' %>>
+          Name (Z-A)
+        </option>
+        <option value="slug" <%= filters?.sort_by === 'slug' ? 'selected' : '' %>>
+          Slug (A-Z)
+        </option>
+        <option value="-slug" <%= filters?.sort_by === '-slug' ? 'selected' : '' %>>
+          Slug (Z-A)
+        </option>
+        <option value="age" <%= filters?.sort_by === 'age' ? 'selected' : '' %>>
+          Age (lowest first)
+        </option>
+        <option value="-age" <%= filters?.sort_by === '-age' ? 'selected' : '' %>>
+          Age (highest first)
+        </option>
+      </select>
+    </div>
+
+    <div>
+      <label for="limit">Results per page</label>
+      <select id="limit" name="limit">
+        <option value="5" <%= String(filters?.limit) === '5' ? 'selected' : '' %>>5</option>
+        <option value="10" <%= String(filters?.limit) === '10' ? 'selected' : '' %>>10</option>
+        <option value="20" <%= String(filters?.limit) === '20' ? 'selected' : '' %>>20</option>
+        <option value="50" <%= String(filters?.limit) === '50' ? 'selected' : '' %>>50</option>
+      </select>
+    </div>
+
+    <input type="hidden" name="offset" value="0">
+
+    <button type="submit">Apply</button>
+    <a href="/users">Reset</a>
+  </form>
+
+  <hr>
+
+  <% if (users.length === 0) { %>
+    <p>No users found.</p>
+  <% } else { %>
+    <ul>
+      <% users.forEach(user => { %>
+        <li>
+          <strong><%= user.user_name %></strong>
+          (<%= user.slug %>) - Age: <%= user.age %>
+          <a href="/users/<%= user.slug %>">View</a>
+          <a href="/users/<%= user.slug %>/edit">Edit</a>
+          <a href="/users/<%= user.slug %>/delete">Delete</a>
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <hr>
+
+  <p>
+    Total matching users: <%= pagination?.total ?? users.length %>
+  </p>
+
+  <div>
+    <% if (pagination?.hasPrevPage) { %>
+      <a href="/users?q=<%= encodeURIComponent(filters?.q || '') %>&age[gte]=<%= encodeURIComponent(filters?.ageGte || '') %>&age[lte]=<%= encodeURIComponent(filters?.ageLte || '') %>&sort_by=<%= encodeURIComponent(filters?.sort_by || 'user_name') %>&limit=<%= encodeURIComponent(filters?.limit || 10) %>&offset=<%= pagination.prevOffset %>">
+        Previous
+      </a>
     <% } %>
-  </main>
 
-  <%- include('../partials/footer') %>
+    <% if (pagination?.hasNextPage) { %>
+      <a href="/users?q=<%= encodeURIComponent(filters?.q || '') %>&age[gte]=<%= encodeURIComponent(filters?.ageGte || '') %>&age[lte]=<%= encodeURIComponent(filters?.ageLte || '') %>&sort_by=<%= encodeURIComponent(filters?.sort_by || 'user_name') %>&limit=<%= encodeURIComponent(filters?.limit || 10) %>&offset=<%= pagination.nextOffset %>">
+        Next
+      </a>
+    <% } %>
+  </div>
 </body>
 </html>
