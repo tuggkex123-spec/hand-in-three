@@ -1,4 +1,4 @@
-import User from '../models/User.js'
+import User from '../models/users.js'
 import { validateUserInput } from '../validators/userValidator.js'
 import AppError from '../utils/AppError.js'
 

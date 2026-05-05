@@ -1,7 +1,9 @@
 import express from 'express'
 import userRoutes from './routes/users.js'
 
-import User from './models/User.js'
+import User from './models/users.js'
+
+const app = express()
 
 app.get('/', async (req, res) => {
   try {
@@ -15,7 +17,6 @@ app.get('/', async (req, res) => {
 
 import errorHandler from './middleware/errorHandler.js'
 
-const app = express()
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
