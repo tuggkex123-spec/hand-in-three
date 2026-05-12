@@ -1,6 +1,8 @@
 import User from '../models/users.js'
 import { validateUserInput } from '../validators/userValidator.js'
 import AppError from '../utils/AppError.js'
+import buildUserQueryOptions from '../utils/buildUserQueryOptions.js'
+
 
 export async function createUser(req, res, next) {
   const result = validateUserInput(req.body)
@@ -181,6 +183,42 @@ export async function deleteUser(req, res, next) {
     }
 
     res.redirect('/users')
+  } catch (error) {
+    next(error)
+  }
+}
+
+export async function listUsers(req, res, next) {
+  try {
+    const { query, sortBy, limit, offset } = buildUserQueryOptions(req.query)
+
+    const users = await User.find(query)
+      .sort(sortBy)
+      .skip(offset)
+      .limit(limit)
+
+    const totalUsers = await User.countDocuments(query)
+
+    res.render('users/index', {
+      users,
+      filters: {
+        q: req.query.q || '',
+        ageGte: req.query.age?.gte || '',
+        ageLte: req.query.age?.lte || '',
+        sort_by: sortBy,
+        limit,
+        offset
+      },
+      pagination: {
+        total: totalUsers,
+        limit,
+        offset,
+        hasNextPage: offset + limit < totalUsers,
+        hasPrevPage: offset > 0,
+        nextOffset: offset + limit,
+        prevOffset: Math.max(offset - limit, 0)
+      }
+    })
   } catch (error) {
     next(error)
   }
