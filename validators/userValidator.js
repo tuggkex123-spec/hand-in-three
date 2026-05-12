@@ -3,6 +3,8 @@ export function validateUserInput(input) {
 
   if (!input.slug || typeof input.slug !== 'string') {
     errors.push('Slug is required.')
+  } else if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(input.slug)) {
+    errors.push('Slug must contain only lowercase letters, numbers, and hyphens.')
   }
 
   if (!input.user_name || typeof input.user_name !== 'string') {
@@ -19,3 +21,4 @@ export function validateUserInput(input) {
     errors
   }
 }
+
