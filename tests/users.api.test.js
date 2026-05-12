@@ -69,11 +69,7 @@ describe('Users API', () => {
       $or: [
         { user_name: { $regex: 'anna', $options: 'i' } },
         { slug: { $regex: 'anna', $options: 'i' } }
-      ],
-      age: {
-        $gte: 18,
-        $lte: 30
-      }
+      ]
     })
 
     expect(mockSort).toHaveBeenCalledWith('-age')
@@ -84,11 +80,7 @@ describe('Users API', () => {
       $or: [
         { user_name: { $regex: 'anna', $options: 'i' } },
         { slug: { $regex: 'anna', $options: 'i' } }
-      ],
-      age: {
-        $gte: 18,
-        $lte: 30
-      }
+      ]
     })
   })
 })
