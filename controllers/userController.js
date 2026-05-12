@@ -3,7 +3,6 @@ import { validateUserInput } from '../validators/userValidator.js'
 import AppError from '../utils/AppError.js'
 import buildUserQueryOptions from '../utils/buildUserQueryOptions.js'
 
-
 export async function createUser(req, res, next) {
   const result = validateUserInput(req.body)
 
@@ -31,59 +30,7 @@ export function getNewUserForm(req, res) {
 
 export async function listUsers(req, res, next) {
   try {
-    const query = {}
-
-    
-    if (req.query.q && req.query.q.trim() !== '') {
-      query.$or = [
-        { user_name: { $regex: req.query.q.trim(), $options: 'i' } },
-        { slug: { $regex: req.query.q.trim(), $options: 'i' } }
-      ]
-    }
-
-    
-    if (req.query.age) {
-      query.age = {}
-
-      if (req.query.age.gte !== undefined && req.query.age.gte !== '') {
-        const minAge = Number(req.query.age.gte)
-        if (!Number.isNaN(minAge)) {
-          query.age.$gte = minAge
-        }
-      }
-
-      if (req.query.age.lte !== undefined && req.query.age.lte !== '') {
-        const maxAge = Number(req.query.age.lte)
-        if (!Number.isNaN(maxAge)) {
-          query.age.$lte = maxAge
-        }
-      }
-
-     
-      if (Object.keys(query.age).length === 0) {
-        delete query.age
-      }
-    }
-
-   
-    const allowedSortFields = ['user_name', 'slug', 'age']
-    let sortBy = 'user_name'
-
-    if (req.query.sort_by && allowedSortFields.includes(req.query.sort_by.replace('-', ''))) {
-      sortBy = req.query.sort_by
-    }
-
-    
-    let limit = Number(req.query.limit)
-    let offset = Number(req.query.offset)
-
-    if (Number.isNaN(limit) || limit <= 0) {
-      limit = 10
-    }
-
-    if (Number.isNaN(offset) || offset < 0) {
-      offset = 0
-    }
+    const { query, sortBy, limit, offset } = buildUserQueryOptions(req.query)
 
     const users = await User.find(query)
       .sort(sortBy)
@@ -116,7 +63,6 @@ export async function listUsers(req, res, next) {
     next(error)
   }
 }
-
 
 export async function showUser(req, res, next) {
   try {
@@ -183,42 +129,6 @@ export async function deleteUser(req, res, next) {
     }
 
     res.redirect('/users')
-  } catch (error) {
-    next(error)
-  }
-}
-
-export async function listUsers(req, res, next) {
-  try {
-    const { query, sortBy, limit, offset } = buildUserQueryOptions(req.query)
-
-    const users = await User.find(query)
-      .sort(sortBy)
-      .skip(offset)
-      .limit(limit)
-
-    const totalUsers = await User.countDocuments(query)
-
-    res.render('users/index', {
-      users,
-      filters: {
-        q: req.query.q || '',
-        ageGte: req.query.age?.gte || '',
-        ageLte: req.query.age?.lte || '',
-        sort_by: sortBy,
-        limit,
-        offset
-      },
-      pagination: {
-        total: totalUsers,
-        limit,
-        offset,
-        hasNextPage: offset + limit < totalUsers,
-        hasPrevPage: offset > 0,
-        nextOffset: offset + limit,
-        prevOffset: Math.max(offset - limit, 0)
-      }
-    })
   } catch (error) {
     next(error)
   }
